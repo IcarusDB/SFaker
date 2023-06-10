@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -21,6 +34,8 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <spark3.version>3.3.2</spark3.version>
+        <maven.scaladoc.skip>false</maven.scaladoc.skip>
+        <CodeCacheSize>128m</CodeCacheSize>
         <spotless.version>2.29.0</spotless.version>
         <maven.plugin.scala.version>4.8.0</maven.plugin.scala.version>
         <maven.plugin.silencer.version>1.7.10</maven.plugin.silencer.version>
@@ -58,7 +73,45 @@
                 <plugin>
                     <groupId>net.alchim31.maven</groupId>
                     <artifactId>scala-maven-plugin</artifactId>
-                    <version>${maven.plugin.scala.version}</version>
+                    <version>${scala-maven-plugin.version}</version>
+                    <configuration>
+                        <scalaVersion>${scala.version}</scalaVersion>
+                        <checkMultipleScalaVersions>true</checkMultipleScalaVersions>
+                        <failOnMultipleScalaVersions>true</failOnMultipleScalaVersions>
+                        <recompileMode>incremental</recompileMode>
+                        <skip>${maven.scaladoc.skip}</skip>
+                        <args>
+                            <arg>-unchecked</arg>
+                            <arg>-deprecation</arg>
+                            <arg>-feature</arg>
+                            <arg>-explaintypes</arg>
+                            <arg>-target:jvm-1.8</arg>
+                            <arg>-Xfatal-warnings</arg>
+                            <arg>-Ywarn-unused:imports</arg>
+                            <arg>-P:silencer:globalFilters=.*deprecated.*</arg>
+                        </args>
+                        <jvmArgs>
+                            <jvmArg>-Xss128m</jvmArg>
+                            <jvmArg>-Xms4g</jvmArg>
+                            <jvmArg>-Xmx4g</jvmArg>
+                            <jvmArg>-XX:MaxMetaspaceSize=2g</jvmArg>
+                            <jvmArg>-XX:ReservedCodeCacheSize=${CodeCacheSize}</jvmArg>
+                        </jvmArgs>
+                        <javacArgs>
+                            <javacArg>-source</javacArg>
+                            <javacArg>${java.version}</javacArg>
+                            <javacArg>-target</javacArg>
+                            <javacArg>${java.version}</javacArg>
+                            <javacArg>-Xlint:all,-serial,-path,-try</javacArg>
+                        </javacArgs>
+                        <compilerPlugins>
+                            <compilerPlugin>
+                                <groupId>com.github.ghik</groupId>
+                                <artifactId>silencer-plugin_${scala.version}</artifactId>
+                                <version>1.7.12</version>
+                            </compilerPlugin>
+                        </compilerPlugins>
+                    </configuration>
                     <executions>
                         <execution>
                             <id>eclipse-add-source</id>
@@ -87,6 +140,19 @@
                         </execution>
                     </executions>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.11.0</version>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                        <skipMain>true</skipMain>
+                        <!-- skip compile -->
+                        <skip>true</skip>
+                        <!-- skip testCompile -->
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
@@ -96,6 +162,9 @@
                 <version>${spotless.version}</version>
                 <configuration>
                     <java>
+                        <licenseHeader>
+                            <file>licenses/header.java</file>
+                        </licenseHeader>
                         <googleJavaFormat>
                             <version>1.11.0</version>
                             <style>AOSP</style>
@@ -121,7 +190,22 @@
                             <replacement>$1</replacement>
                         </replaceRegex>
                     </java>
+                    <scala>
+                        <licenseHeader>
+                            <file>licenses/header.java</file>
+                            <delimiter>(package )</delimiter>
+                        </licenseHeader>
+                        <scalafmt>
+                            <version>3.5.9</version>
+                            <scalaMajorVersion>${scala.binary.version}</scalaMajorVersion>
+                            <!-- optional -->
+                        </scalafmt>
+                    </scala>
                     <pom>
+                        <licenseHeader>
+                            <delimiter>(&lt;project )</delimiter>
+                            <file>licenses/header.xml</file>
+                        </licenseHeader>
                         <sortPom>
                             <encoding>UTF-8</encoding>
                             <nrOfIndentSpace>4</nrOfIndentSpace>
