@@ -1,6 +1,9 @@
 # SFaker
 <img src="docs/logo/sfaker_logo.svg" alt="SFaker logo" height="200px" align="center" />
 
+
+![ApacheV2](https://img.shields.io/badge/license-Apache--2.0-blue)
+
 ---
 SFaker is one data generator. It implemented with Spark DataSourceV2. SFaker can generate rows according to specified schemas. 
 
