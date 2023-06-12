@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.sfaker.examples.generator
+package org.sfaker.generator
 
 object SeqToArray {
   def copy(seq: Seq[Object]): Array[Object] = {

@@ -17,9 +17,6 @@
 
 package org.sfaker.generator;
 
-import org.sfaker.examples.generator.CreateMapData;
-import org.sfaker.examples.generator.SeqToArray;
-
 import org.apache.spark.sql.catalyst.InternalRow;
 import org.apache.spark.sql.catalyst.util.ArrayData;
 import org.apache.spark.sql.catalyst.util.MapData;
