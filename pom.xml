@@ -23,6 +23,7 @@
     <description>SFaker is one high performance data generator based on Apache Spark SQL.</description>
     <modules>
         <module>sfaker-core</module>
+        <module>sfaker-examples</module>
     </modules>
 
     <properties>

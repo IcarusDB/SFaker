@@ -18,21 +18,34 @@
 package org.sfaker.examples
 
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.execution.CodegenMode
+import org.sfaker.source.FakeSourceCatalog;
 
-object Case1 {
+object Case3 {
   def main(args: Array[String]): Unit = {
     val spark = SparkSession
       .builder()
       .master("local[*]")
-      .appName("Case1")
+      .appName("Case0")
+      .config(
+        "spark.sql.catalog.spark_catalog",
+        classOf[FakeSourceCatalog].getName
+      )
       .getOrCreate();
-    spark.sparkContext.setLogLevel("DEBUG");
-
-    val data = spark.read.json("src/main/resources/case1.json");
-    data.createOrReplaceTempView("case");
-    spark
-      .sql("select id, count(1) from case group by id")
-      .explain(CodegenMode.name);
+    val df = spark.sql("""
+          |create table fake (
+          | id int,
+          | sex boolean
+          |)
+          |using FakeSource
+          |tblproperties (
+          |spark.sql.fake.source.rowsTotalSize = 10000000,
+          |spark.sql.fake.source.partitions = 1,
+          |spark.sql.fake.source.unsafe.row.enable = true,
+          |spark.sql.fake.source.unsafe.codegen.enable = true
+          |)
+          |""".stripMargin)
+    spark.sql("select id from fake limit 10").explain(true);
+    spark.sql("show tables").show();
+    spark.close();
   }
 }
