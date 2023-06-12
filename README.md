@@ -73,6 +73,15 @@ val df = spark.read
 ```
 ### Spark SQL Create Statement
 ```scala
+val spark = SparkSession
+      .builder()
+      .master("local[*]")
+      .appName("Case0")
+      .config(
+        "spark.sql.catalog.spark_catalog",
+        classOf[FakeSourceCatalog].getName
+      )
+      .getOrCreate();
 val df = spark.sql("""
           |create table fake (
           | id int,
