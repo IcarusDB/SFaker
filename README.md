@@ -3,7 +3,7 @@
 
 
 ![ApacheV2](https://img.shields.io/badge/license-Apache--2.0-blue)
-
+[![Test with Maven](https://github.com/CheneyYin/SFaker/actions/workflows/maven_test.yml/badge.svg)](https://github.com/CheneyYin/SFaker/actions/workflows/maven_test.yml)
 ---
 SFaker is one data generator. It implemented with Spark DataSourceV2. SFaker can generate rows according to specified schemas. 
 
