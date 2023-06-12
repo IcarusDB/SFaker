@@ -19,7 +19,7 @@ package org.sfaker.examples
 
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.types.{DataTypes, StructType}
-import org.sfaker.source.FakeSourceProps
+import org.sfaker.source.FakeSourceProps;
 
 object Case0 {
   def main(args: Array[String]): Unit = {

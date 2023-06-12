@@ -18,7 +18,7 @@
 package org.sfaker.examples
 
 import org.apache.spark.sql.types.{DataTypes, StructType}
-import org.sfaker.generator.unsafe.FakeUnsafeGenerator
+import org.sfaker.generator.unsafe.FakeUnsafeGenerator;
 
 object Case2 {
   def main(args: Array[String]): Unit = {
