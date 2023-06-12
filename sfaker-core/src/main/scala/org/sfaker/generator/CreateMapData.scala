@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.sfaker.examples.generator
+package org.sfaker.generator
 
 import org.apache.spark.sql.catalyst.util.{ArrayBasedMapData, MapData}
 
