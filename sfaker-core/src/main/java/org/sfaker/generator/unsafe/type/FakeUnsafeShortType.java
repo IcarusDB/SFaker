@@ -47,8 +47,7 @@ public class FakeUnsafeShortType extends FakeUnsafeType {
     public void genCode(Context ctx, String ordinalName) {
         String valName = ctx.freshVarName();
         String writerName = ctx.getNameOrCreate(writer());
-        ctx.addIntoGen(
-                "short " + valName + " = org.cheney.fake.generator.FakeGenerator.genShort();");
+        ctx.addIntoGen("short " + valName + " = " + FakeGenerator.class.getName() + ".genShort();");
         ctx.addIntoGen(writerName + ".write(" + ordinalName + ", " + valName + ");");
     }
 }

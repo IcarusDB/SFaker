@@ -47,8 +47,7 @@ public class FakeUnsafeFloatType extends FakeUnsafeType {
     public void genCode(Context ctx, String ordinalName) {
         String valName = ctx.freshVarName();
         String writerName = ctx.getNameOrCreate(writer());
-        ctx.addIntoGen(
-                "float " + valName + " = org.cheney.fake.generator.FakeGenerator.genFloat();");
+        ctx.addIntoGen("float " + valName + " = " + FakeGenerator.class.getName() + ".genFloat();");
         ctx.addIntoGen(writerName + ".write(" + ordinalName + ", " + valName + ");");
     }
 }

@@ -15,11 +15,9 @@
  * limitations under the License.
  */
 
-package org.sfaker
+package org.sfaker.examples
 
-import org.apache.spark.sql.catalyst.expressions.codegen.UnsafeRowWriter
 import org.apache.spark.sql.types.{DataTypes, StructType}
-import org.sfaker.generator.code.FakeCodegen
 import org.sfaker.generator.unsafe.FakeUnsafeGenerator
 
 object Case2 {
@@ -29,7 +27,6 @@ object Case2 {
       .add("sex", DataTypes.BooleanType)
       .add("name", DataTypes.StringType)
       .add("roles", DataTypes.createArrayType(DataTypes.StringType))
-//      //      .add("roles", DataTypes.createArrayType(DataTypes.createArrayType(DataTypes.IntegerType)))
       .add(
         "conf",
         DataTypes.createMapType(DataTypes.StringType, DataTypes.IntegerType)
@@ -51,7 +48,6 @@ object Case2 {
     println(row.getBoolean(1));
     println(row.getUTF8String(2));
     println(row.getArray(3).getUTF8String(0));
-    //    println(row.getStruct(4, 2).getString(1));
     println(row.getMap(4).keyArray().getUTF8String(0).toString);
     println(row.getStruct(5, 2).getString(1))
   }

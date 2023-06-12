@@ -47,7 +47,7 @@ public class FakeUnsafeIntType extends FakeUnsafeType {
     public void genCode(Context ctx, String ordinalName) {
         String valName = ctx.freshVarName();
         String writerName = ctx.getNameOrCreate(writer());
-        ctx.addIntoGen("int " + valName + " = org.cheney.fake.generator.FakeGenerator.genInt();");
+        ctx.addIntoGen("int " + valName + " = " + FakeGenerator.class.getName() + ".genInt();");
         ctx.addIntoGen(writerName + ".write(" + ordinalName + ", " + valName + ");");
     }
 }

@@ -48,7 +48,7 @@ public class FakeUnsafeBooleanType extends FakeUnsafeType {
         String valName = ctx.freshVarName();
         String writerName = ctx.getNameOrCreate(writer());
         ctx.addIntoGen(
-                "boolean " + valName + " = org.cheney.fake.generator.FakeGenerator.genBoolean();");
+                "boolean " + valName + " = " + FakeGenerator.class.getName() + ".genBoolean();");
         ctx.addIntoGen(writerName + ".write(" + ordinalName + ", " + valName + ");");
     }
 }

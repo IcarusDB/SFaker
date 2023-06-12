@@ -48,7 +48,7 @@ public class FakeUnsafeDoubleType extends FakeUnsafeType {
         String valName = ctx.freshVarName();
         String writerName = ctx.getNameOrCreate(writer());
         ctx.addIntoGen(
-                "double " + valName + " = org.cheney.fake.generator.FakeGenerator.genDouble();");
+                "double " + valName + " = " + FakeGenerator.class.getName() + ".genDouble();");
         ctx.addIntoGen(writerName + ".write(" + ordinalName + ", " + valName + ");");
     }
 }

@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-package org.sfaker
+package org.sfaker.examples
 
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.execution.{CodegenMode, FormattedMode}
+import org.apache.spark.sql.execution.CodegenMode
 
 object Case1 {
   def main(args: Array[String]): Unit = {
@@ -27,7 +27,7 @@ object Case1 {
       .master("local[*]")
       .appName("Case1")
       .getOrCreate();
-//    spark.sparkContext.setLogLevel("DEBUG");
+    spark.sparkContext.setLogLevel("DEBUG");
 
     val data = spark.read.json("src/main/resources/case1.json");
     data.createOrReplaceTempView("case");

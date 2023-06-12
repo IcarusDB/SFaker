@@ -47,7 +47,7 @@ public class FakeUnsafeLongType extends FakeUnsafeType {
     public void genCode(Context ctx, String ordinalName) {
         String valName = ctx.freshVarName();
         String writerName = ctx.getNameOrCreate(writer());
-        ctx.addIntoGen("long " + valName + " = org.cheney.fake.generator.FakeGenerator.genLong();");
+        ctx.addIntoGen("long " + valName + " = " + FakeGenerator.class.getName() + ".genLong();");
         ctx.addIntoGen(writerName + ".write(" + ordinalName + ", " + valName + ");");
     }
 }

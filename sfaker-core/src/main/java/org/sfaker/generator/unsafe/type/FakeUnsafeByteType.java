@@ -47,7 +47,7 @@ public class FakeUnsafeByteType extends FakeUnsafeType {
     public void genCode(Context ctx, String ordinalName) {
         String valName = ctx.freshVarName();
         String writerName = ctx.getNameOrCreate(writer());
-        ctx.addIntoGen("byte " + valName + " = org.cheney.fake.generator.FakeGenerator.genByte();");
+        ctx.addIntoGen("byte " + valName + " = " + FakeGenerator.class.getName() + ".genByte();");
         ctx.addIntoGen(writerName + ".write(" + ordinalName + ", " + valName + ");");
     }
 }

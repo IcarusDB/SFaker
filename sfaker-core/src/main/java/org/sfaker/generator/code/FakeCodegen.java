@@ -74,7 +74,7 @@ public interface FakeCodegen {
                     new ParentClassLoader(Utils.getContextOrSparkClassLoader());
             evaluator.setParentClassLoader(parentClassLoader);
 
-            evaluator.setClassName("org.cheney.fake.generator.code.FakeGeneratorCreator");
+            evaluator.setClassName(FakeCodegen.class.getName() + "GeneratorCreator");
             evaluator.setDefaultImports(
                     IFakeGenerator.class.getName(),
                     Platform.class.getName(),

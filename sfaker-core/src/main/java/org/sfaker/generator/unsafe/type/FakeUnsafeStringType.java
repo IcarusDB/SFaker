@@ -49,7 +49,7 @@ public class FakeUnsafeStringType extends FakeUnsafeType {
         String valName = ctx.freshVarName();
         String writerName = ctx.getNameOrCreate(writer());
         ctx.addIntoGen(
-                "String " + valName + " = org.cheney.fake.generator.FakeGenerator.genString();");
+                "String " + valName + " = " + FakeGenerator.class.getName() + ".genString();");
         ctx.addIntoGen(
                 writerName
                         + ".write("
